@@ -51,10 +51,10 @@ def is_char_color(tag):
 ##for s in span_text:
 ##    print s.get_text()
 
-#001901 - 007721
+#001901 - 007743
 def scrape_homestuck():
     # first, open each page
-    for i in range(6455, 7722):
+    for i in range(7722, 7743, 2):
         url = 'http://www.mspaintadventures.com/?s=6&p=00' + str(i) + '\n'
         page = bs4.BeautifulSoup(urllib2.urlopen(url).read())
         # write texts to file
@@ -70,8 +70,9 @@ def scrape_homestuck():
             f.write('\n')
         # then check if each character talks on page
 
+# some problems: for the double pages, some text was scraped twice.
 def scrape_homestuck_characters():
-    for i in range(1901, 2000):
+    for i in range(7687, 7743, 2):
         url = 'http://www.mspaintadventures.com/?s=6&p=00' + str(i) + '\n'
         page = bs4.BeautifulSoup(urllib2.urlopen(url).read())
         # for each character, check if they are on the page, and if so,
@@ -80,13 +81,13 @@ def scrape_homestuck_characters():
             char_text = page.find_all(name = "span", style = STYLE_DICT[char])
             if not char_text:
                 continue
-            f = open(char + '.txt', 'a')
+            f = codecs.open(char + '.txt', mode = 'a', encoding = 'utf-8')
             f.write(url)
             for line in char_text:
                 f.write(line.get_text())
                 f.write('\n')
 
-scrape_homestuck()
+scrape_homestuck_characters()
 # Goal: get a training set of each character's pesterlogs. Then run some
 # machine learning algorithm. Then run machine learning algorithm on
 # other stuff. ??? Profit!
