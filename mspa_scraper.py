@@ -16,18 +16,6 @@ STYLE_DICT = {'gamzee': "color: #2b0057", 'dave':"color: #e00707",
               'jaspersprite': "color: #f141ef", 'felt':"color: #2ed73a",
               'scratch':"color: #ffffff", 'calliope': "color: #929292",
               'caliborn': "color: #323232", "karkat_blood": "color: #ff0000"}
-# open file
-##makara_text = open('makara_text.txt', 'w')
-##test_page = bs4.BeautifulSoup(urllib2.urlopen('http://www.mspaintadventures.com/?s=6&p=003910').read())
-#print test_page
-# prints all of one character's chatlogs.
-##for i in test_page.find_all('span', style = "color: #2b0057"):
-##    print i.get_text()
-##    makara_text.write(str(i.get_text()) + '\n')
-##print
-##print test_page.find_all('p', style = "font-weight: bold; font-family: courier, monospace;color:#000000")
-
-
 
 # How would I get only the chatlog on each page?
 def is_chatbox(tag):
@@ -41,15 +29,6 @@ def is_char_color(tag):
     if tag in STYLE_DICT.values():
         return True
     return False
-
-##page = bs4.BeautifulSoup(urllib2.urlopen('http://www.mspaintadventures.com/?s=6&p=001926').read())
-####chatbox = page.find_all(is_chatbox)
-##### chatbox is a list-like object
-####for element in chatbox:
-####    print element.contents
-##span_text = page.find_all(name = "span", style = is_char_color)
-##for s in span_text:
-##    print s.get_text()
 
 #001901 - 007743
 def scrape_homestuck():
@@ -86,8 +65,3 @@ def scrape_homestuck_characters():
             for line in char_text:
                 f.write(line.get_text())
                 f.write('\n')
-
-scrape_homestuck_characters()
-# Goal: get a training set of each character's pesterlogs. Then run some
-# machine learning algorithm. Then run machine learning algorithm on
-# other stuff. ??? Profit!
