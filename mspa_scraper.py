@@ -1,6 +1,7 @@
 import urllib2
 import bs4
 import codecs
+import re
 
 # Dictionary of 'name':style color for use in naming files and identifying text
 STYLE_DICT = {'gamzee': "color: #2b0057", 'dave':"color: #e00707",
@@ -65,3 +66,34 @@ def scrape_homestuck_characters():
             for line in char_text:
                 f.write(line.get_text())
                 f.write('\n')
+
+def create_training_data(file_name, num_lines):
+    '''
+    Creates a file called file_name + '_training.txt' from filename.
+    num_lines is the number of lines that will be in training data.
+    Strips out the url and any lines that contain [].
+    '''
+    source = open(file_name, 'r')
+    dest_name = file_name.split('.')[0] + '_training.txt'
+    print dest_name
+    dest = open(dest_name, 'w')
+    to_discard = re.compile(r'(\[..\])|http:')
+    num_read = 0
+    while num_read < num_lines:
+        line = source.readline()
+        if to_discard.search(line):
+            continue
+        print line
+        dest.write(line)
+        num_read += 1
+    source.close()
+    dest.close()
+
+to_search = ['gamzee.txt', 'karkat.txt', 'eridan.txt', 'nepeta.txt',
+             'equius.txt', 'feferi.txt', 'aradia.txt', 'john.txt', 'dave.txt',
+             'sollux.txt', 'terezi.txt', 'rose.txt', 'kanaya.txt', 'tavros.txt',
+             'vriska.txt', 'jade.txt']
+
+for f in to_search:
+    create_training_data(f, 200)
+    
